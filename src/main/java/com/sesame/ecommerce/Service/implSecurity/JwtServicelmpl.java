@@ -59,8 +59,11 @@ public class JwtServicelmpl implements JwtService {
 
     @Override
     public String generateRefreshToken(UserDetails userDetails) {
-        return buildToken(new HashMap<>(), userDetails, refreshExpirationMs);
+        Map<String, Object> claims = new HashMap<>();
+        claims.put("token_type", "refresh");
+        return buildToken(claims, userDetails, refreshExpirationMs);
     }
+
 
     @Override
     public boolean isTokenValid(String token, UserDetails userDetails) {

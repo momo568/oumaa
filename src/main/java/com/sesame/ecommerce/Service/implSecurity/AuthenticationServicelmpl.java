@@ -1,13 +1,17 @@
 package com.sesame.ecommerce.Service.implSecurity;
 
+import com.sesame.ecommerce.Exception.TokenRefreshException;
+import com.sesame.ecommerce.Models.DTO.request.RefreshTokenRequest;
 import com.sesame.ecommerce.Models.DTO.request.SignUpRequest;
 import com.sesame.ecommerce.Models.DTO.request.SigninRequest;
 import com.sesame.ecommerce.Models.DTO.request.response.JwtAuthenticationResponse;
+import com.sesame.ecommerce.Models.RefreshToken;
 import com.sesame.ecommerce.Models.Role;
 import com.sesame.ecommerce.Models.User;
 import com.sesame.ecommerce.Repositories.UserRepository;
 import com.sesame.ecommerce.Security.AuthenticationService;
 import com.sesame.ecommerce.Security.JwtService;
+import com.sesame.ecommerce.Security.RefreshTokenService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -22,6 +26,7 @@ public class AuthenticationServicelmpl implements AuthenticationService {
     private final PasswordEncoder passwordEncoder;
     private final AuthenticationManager authenticationManager;
     private final JwtService jwtService;
+    private final RefreshTokenService refreshTokenService;
 
     @Override
     public JwtAuthenticationResponse SignUp(SignUpRequest request) {
@@ -35,10 +40,15 @@ public class AuthenticationServicelmpl implements AuthenticationService {
                 .build();
         userRepository.save(user);
         var jwtToken = jwtService.generateToken(user);
+
+        var refreshToken = refreshTokenService.createRefreshToken(user.getId());
+
         return JwtAuthenticationResponse.builder()
                 .accessToken(jwtToken)
+                .refreshToken(refreshToken.getToken())
                 .userId(user.getId())
                 .role(user.getRole().name())
+                .tokenType("Bearer")
                 .build();
     }
 
@@ -55,12 +65,37 @@ public class AuthenticationServicelmpl implements AuthenticationService {
                 .orElseThrow(() -> new IllegalArgumentException("Invalid email or password"));
 
         var jwtToken = jwtService.generateToken(user);
-        var refreshToken = jwtService.generateRefreshToken(user);
+        var refreshToken = refreshTokenService.createRefreshToken(user.getId());
 
         return JwtAuthenticationResponse.builder()
                 .accessToken(jwtToken)
+                .refreshToken(refreshToken.getToken())
                 .userId(user.getId())
                 .role(user.getRole().name())
+                .tokenType("Bearer")
                 .build();
+    }
+
+    @Override
+    public JwtAuthenticationResponse refreshToken(RefreshTokenRequest request) {
+        String requestRefreshToken = request.getRefreshToken();
+
+        return refreshTokenService.findByToken(requestRefreshToken)
+                .map(refreshTokenService::verifyExpiration)
+                .map(RefreshToken::getUser)
+                .map(user -> {
+                    String token = jwtService.generateToken(user);
+                    return JwtAuthenticationResponse.builder()
+                            .accessToken(token)
+                            .refreshToken(requestRefreshToken)
+                            .userId(user.getId())
+                            .role(user.getRole().name())
+                            .tokenType("Bearer")
+                            .build();
+                })
+                .orElseThrow(() -> new TokenRefreshException(
+                        requestRefreshToken,
+                        "Refresh token is not in database!"
+                ));
     }
 }

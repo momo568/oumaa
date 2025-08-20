@@ -1,5 +1,6 @@
 package com.sesame.ecommerce.Controllers;
 
+import com.sesame.ecommerce.Models.DTO.request.RefreshTokenRequest;
 import com.sesame.ecommerce.Models.DTO.request.SignUpRequest;
 import com.sesame.ecommerce.Models.DTO.request.SigninRequest;
 import com.sesame.ecommerce.Models.DTO.request.response.JwtAuthenticationResponse;
@@ -36,4 +37,17 @@ public class AuthenticationController {
 
         return ResponseEntity.ok(jwtResponse);
     }
+    @PostMapping("/refresh-token")
+    public ResponseEntity<JwtAuthenticationResponse> refreshToken(
+            @RequestBody RefreshTokenRequest request,
+            HttpServletResponse httpResponse
+    ) {
+        JwtAuthenticationResponse response = authenticationService.refreshToken(request);
+
+        httpResponse.setHeader("Access-Control-Expose-Headers", "Authorization");
+        httpResponse.setHeader("Authorization", "Bearer " + response.getAccessToken());
+
+        return ResponseEntity.ok(response);
+    }
+
 }
