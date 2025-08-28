@@ -1,17 +1,14 @@
 package com.sesame.ecommerce.Controllers;
 
-import com.sesame.ecommerce.Models.DTO.request.RefreshTokenRequest;
-import com.sesame.ecommerce.Models.DTO.request.SignUpRequest;
-import com.sesame.ecommerce.Models.DTO.request.SigninRequest;
+import com.sesame.ecommerce.Exception.OTPExpiredException;
+import com.sesame.ecommerce.Models.DTO.request.*;
 import com.sesame.ecommerce.Models.DTO.request.response.JwtAuthenticationResponse;
 import com.sesame.ecommerce.Security.AuthenticationService;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
@@ -48,6 +45,38 @@ public class AuthenticationController {
         httpResponse.setHeader("Authorization", "Bearer " + response.getAccessToken());
 
         return ResponseEntity.ok(response);
+    }
+    @PostMapping("/forgot-password")
+    public ResponseEntity<?> forgotPassword(@RequestBody ForgotPasswordRequest request) {
+        try {
+            authenticationService.sendForgotPasswordEmail(request.getEmail());
+            return ResponseEntity.ok().body("Password reset email sent successfully");
+        } catch (OTPExpiredException ex) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User not found");
+        } catch (Exception ex) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("An error occurred");
+        }
+    }
+
+    @PostMapping("/verify-otp")
+    public ResponseEntity<?> verifyOTP(@RequestParam String email, @RequestParam String otp) {
+        try {
+            authenticationService.verifyOTP(email, otp); // Implement this method in your UserService
+            return ResponseEntity.ok().body("OTP verified successfully");
+        } catch (OTPExpiredException ex) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("OTP verification failed: " + ex.getMessage());
+        } catch (Exception ex) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("An error occurred");
+        }
+    }
+    @PostMapping("/reset-password")
+    public ResponseEntity<?> resetPassword(@RequestBody ResetPasswordRequest request) {
+        try {
+            authenticationService.resetPassword(request);
+            return ResponseEntity.ok().body("Password reset successfully");
+        } catch (Exception ex) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("An error occurred");
+        }
     }
 
 }

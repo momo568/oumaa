@@ -28,20 +28,16 @@ public class RefreshTokenServicelmpl implements RefreshTokenService {
 
     @Override
     public RefreshToken createRefreshToken(Long userId) {
-        // Récupérer l'utilisateur par ID
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new RuntimeException("User not found with id: " + userId));
 
-        // Vérifier s'il existe déjà un refresh token pour cet utilisateur
         Optional<RefreshToken> existingToken = refreshTokenRepository.findByUser(user);
 
-        // Générer un nouveau token JWT
         String token = jwtService.generateRefreshToken(user);
         if (token.length() > 512) {
             throw new IllegalStateException("Generated token exceeds maximum length");
         }
 
-        // Mettre à jour le token existant s'il est présent
         if (existingToken.isPresent()) {
             RefreshToken refreshToken = existingToken.get();
             refreshToken.setToken(token);
@@ -49,7 +45,6 @@ public class RefreshTokenServicelmpl implements RefreshTokenService {
             return refreshTokenRepository.save(refreshToken);
         }
 
-        // Créer un nouveau refresh token
         RefreshToken refreshToken = RefreshToken.builder()
                 .user(user)
                 .token(token)
@@ -61,7 +56,7 @@ public class RefreshTokenServicelmpl implements RefreshTokenService {
 
     @Override
     public RefreshToken verifyExpiration(RefreshToken token) {
-        if (token.getExpiryDate().isBefore(Instant.now())) {
+        if (token.getExpiryDate().compareTo(Instant.now()) < 0) {
             refreshTokenRepository.delete(token);
             throw new TokenRefreshException(
                     token.getToken(),
@@ -70,6 +65,7 @@ public class RefreshTokenServicelmpl implements RefreshTokenService {
         }
         return token;
     }
+
 
     @Override
     public Optional<RefreshToken> findByToken(String token) {

@@ -6,6 +6,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.List;
 
@@ -37,7 +38,11 @@ public class User implements UserDetails {
     private String email;
 
     private String password;
+    @Column
+    private String otp;
 
+    @Column
+    private LocalDateTime otpExpiry;
     @Enumerated(EnumType.STRING)
     @Column(length = 20)
     private Role role;
