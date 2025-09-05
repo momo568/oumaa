@@ -15,6 +15,7 @@ public class JwtAuthenticationResponse {
     private String role;
     private String refreshToken;
     private  String  tokenType;
+    private Boolean isVerified;
     public String getAccessToken() {
         return this.accessToken;
     }

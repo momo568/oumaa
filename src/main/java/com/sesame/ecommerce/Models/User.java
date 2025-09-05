@@ -46,7 +46,14 @@ public class User implements UserDetails {
     @Enumerated(EnumType.STRING)
     @Column(length = 20)
     private Role role;
-
+@Column(name ="is_verified",nullable = false)
+private boolean isVerified = false ;
+@Column(name = "verification_token")
+private String verificationToken;
+@Column(name = "verification_token_expiry")
+private LocalDateTime verificationTokenExpiry;
+@Column(name = "is_enabled",nullable = false)
+private Boolean isEnabled =true;
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return List.of(new SimpleGrantedAuthority( role.name()));

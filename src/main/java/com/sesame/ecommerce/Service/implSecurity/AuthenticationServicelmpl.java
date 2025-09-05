@@ -11,10 +11,7 @@ import com.sesame.ecommerce.Models.RefreshToken;
 import com.sesame.ecommerce.Models.Role;
 import com.sesame.ecommerce.Models.User;
 import com.sesame.ecommerce.Repositories.UserRepository;
-import com.sesame.ecommerce.Security.AuthenticationService;
-import com.sesame.ecommerce.Security.EmailService;
-import com.sesame.ecommerce.Security.JwtService;
-import com.sesame.ecommerce.Security.RefreshTokenService;
+import com.sesame.ecommerce.Security.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -34,9 +31,14 @@ public class AuthenticationServicelmpl implements AuthenticationService {
     private final JwtService jwtService;
     private final RefreshTokenService refreshTokenService;
     private final EmailService emailService;
+    private final EmailVerificationService emailVerificationService;
 
     @Override
     public JwtAuthenticationResponse SignUp(SignUpRequest request) {
+        if (userRepository.findByEmail(request.getEmail()) .isPresent()) {
+            throw  new RuntimeException("Email in use ");
+        }
+
         Role role = request.getRole() != null ? request.getRole() : Role.CUSTOMER;
         var user = User.builder()
                 .firstName(request.getFirstName())
@@ -56,6 +58,7 @@ public class AuthenticationServicelmpl implements AuthenticationService {
                 .userId(user.getId())
                 .role(user.getRole().name())
                 .tokenType("Bearer")
+
                 .build();
     }
 
@@ -70,7 +73,10 @@ public class AuthenticationServicelmpl implements AuthenticationService {
 
         var user = userRepository.findByEmail(request.getEmail())
                 .orElseThrow(() -> new IllegalArgumentException("Invalid email or password"));
+        if (!user.isVerified()){
+            throw new RuntimeException(("Account is verified "+"Pleaser chack your email dor verification link"));
 
+        }
         var jwtToken = jwtService.generateToken(user);
         var refreshToken = refreshTokenService.createRefreshToken(user.getId());
 
