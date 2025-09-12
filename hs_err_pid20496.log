@@ -1,0 +1,241 @@
+#
+# There is insufficient memory for the Java Runtime Environment to continue.
+# Native memory allocation (mmap) failed to map 266338304 bytes. Error detail: G1 virtual space
+# Possible reasons:
+#   The system is out of physical RAM or swap space
+#   This process is running with CompressedOops enabled, and the Java Heap may be blocking the growth of the native heap
+# Possible solutions:
+#   Reduce memory load on the system
+#   Increase physical memory or swap space
+#   Check if swap backing store is full
+#   Decrease Java heap size (-Xmx/-Xms)
+#   Decrease number of Java threads
+#   Decrease Java thread stack sizes (-Xss)
+#   Set larger code cache with -XX:ReservedCodeCacheSize=
+#   JVM is running with Zero Based Compressed Oops mode in which the Java heap is
+#     placed in the first 32GB address space. The Java Heap base address is the
+#     maximum limit for the native heap growth. Please use -XX:HeapBaseMinAddress
+#     to set the Java Heap base and to place the Java Heap above 32GB virtual address.
+# This output file may be truncated or incomplete.
+#
+#  Out of Memory Error (os_windows.cpp:3703), pid=20496, tid=32884
+#
+# JRE version:  (23.0.1+11) (build )
+# Java VM: OpenJDK 64-Bit Server VM (23.0.1+11-39, mixed mode, sharing, tiered, compressed oops, compressed class ptrs, g1 gc, windows-amd64)
+# No core dump will be written. Minidumps are not enabled by default on client versions of Windows
+#
+
+---------------  S U M M A R Y ------------
+
+Command Line: -Dmaven.multiModuleProjectDirectory=F:\app\Downloads\miniprojet\backend\E-commerce -Djansi.passthrough=true -Dmaven.home=C:\Users\OUMAIMA\.m2\wrapper\dists\apache-maven-3.9.11-bin\6mqf5t809d9geo83kj4ttckcbc\apache-maven-3.9.11 -Dclassworlds.conf=C:\Users\OUMAIMA\.m2\wrapper\dists\apache-maven-3.9.11-bin\6mqf5t809d9geo83kj4ttckcbc\apache-maven-3.9.11\bin\m2.conf -Dmaven.ext.class.path=F:\OUMAIMA\IntelliJ IDEA 2024.2.2\plugins\maven\lib\maven-event-listener.jar -javaagent:F:\OUMAIMA\IntelliJ IDEA 2024.2.2\lib\idea_rt.jar=61576:F:\OUMAIMA\IntelliJ IDEA 2024.2.2\bin -Dfile.encoding=UTF-8 -Dsun.stdout.encoding=UTF-8 -Dsun.stderr.encoding=UTF-8 org.codehaus.classworlds.Launcher -Didea.version=2024.2.2 --offline install
+
+Host: Intel(R) Core(TM) i5-10500H CPU @ 2.50GHz, 12 cores, 15G,  Windows 11 , 64 bit Build 22621 (10.0.22621.5415)
+Time: Fri Sep 12 19:25:57 2025 Afr. centrale Ouest elapsed time: 0.041656 seconds (0d 0h 0m 0s)
+
+---------------  T H R E A D  ---------------
+
+Current thread (0x0000024900c22e90):  JavaThread "Unknown thread" [_thread_in_vm, id=32884, stack(0x00000095bdd00000,0x00000095bde00000) (1024K)]
+
+Stack: [0x00000095bdd00000,0x00000095bde00000]
+Native frames: (J=compiled Java code, j=interpreted, Vv=VM code, C=native code)
+V  [jvm.dll+0x6e08b9]  (no source info available)
+V  [jvm.dll+0x87dc83]  (no source info available)
+V  [jvm.dll+0x88010e]  (no source info available)
+V  [jvm.dll+0x8807e3]  (no source info available)
+V  [jvm.dll+0x27aee6]  (no source info available)
+V  [jvm.dll+0x6dd1c5]  (no source info available)
+V  [jvm.dll+0x6d104a]  (no source info available)
+V  [jvm.dll+0x35b3ea]  (no source info available)
+V  [jvm.dll+0x3637f6]  (no source info available)
+V  [jvm.dll+0x34fd5e]  (no source info available)
+V  [jvm.dll+0x34fff8]  (no source info available)
+V  [jvm.dll+0x3289cc]  (no source info available)
+V  [jvm.dll+0x32966e]  (no source info available)
+V  [jvm.dll+0x844355]  (no source info available)
+V  [jvm.dll+0x3b9848]  (no source info available)
+V  [jvm.dll+0x82d14c]  (no source info available)
+V  [jvm.dll+0x454d4e]  (no source info available)
+V  [jvm.dll+0x456bd1]  (no source info available)
+C  [jli.dll+0x52a3]  (no source info available)
+C  [ucrtbase.dll+0x29333]  (no source info available)
+C  [KERNEL32.DLL+0x1259d]  (no source info available)
+C  [ntdll.dll+0x5af78]  (no source info available)
+
+Lock stack of current Java thread (top to bottom):
+
+
+---------------  P R O C E S S  ---------------
+
+Threads class SMR info:
+_java_thread_list=0x00007fffb9ab3618, length=0, elements={
+}
+
+Java Threads: ( => current thread )
+Total: 0
+
+Other Threads:
+  0x0000024902f951a0 WorkerThread "GC Thread#0"                     [id=38328, stack(0x00000095bde00000,0x00000095bdf00000) (1024K)]
+  0x0000024902fa9e50 ConcurrentGCThread "G1 Main Marker"            [id=38260, stack(0x00000095bdf00000,0x00000095be000000) (1024K)]
+  0x0000024902fab010 WorkerThread "G1 Conc#0"                       [id=33688, stack(0x00000095be000000,0x00000095be100000) (1024K)]
+
+[error occurred during error reporting (printing all threads), id 0xc0000005, EXCEPTION_ACCESS_VIOLATION (0xc0000005) at pc=0x00007fffb91fbfba]
+VM state: not at safepoint (not fully initialized)
+
+VM Mutex/Monitor currently owned by a thread:  ([mutex/lock_event])
+[0x00007fffb9b33a10] Heap_lock - owner thread: 0x0000024900c22e90
+
+Heap address: 0x0000000703800000, size: 4040 MB, Compressed Oops mode: Zero based, Oop shift amount: 3
+
+CDS archive(s) mapped at: [0x0000000000000000-0x0000000000000000-0x0000000000000000), size 0, SharedBaseAddress: 0x0000000800000000, ArchiveRelocationMode: 1.
+Narrow klass base: 0x0000000000000000, Narrow klass shift: 0, Narrow klass range: 0x0
+
+GC Precious Log:
+ CardTable entry size: 512
+ Card Set container configuration: InlinePtr #cards 4 size 8 Array Of Cards #cards 16 size 48 Howl #buckets 8 coarsen threshold 3686 Howl Bitmap #cards 512 size 80 coarsen threshold 460 Card regions per heap region 1 cards per card region 4096
+
+Heap:
+ garbage-first heap   total reserved 4136960K, committed 0K, used 0K [0x0000000703800000, 0x0000000800000000)
+  region size 2048K, 0 young (0K), 0 survivors (0K)
+
+[error occurred during error reporting (printing heap information), id 0xc0000005, EXCEPTION_ACCESS_VIOLATION (0xc0000005) at pc=0x00007fffb95fc3c9]
+GC Heap History (0 events):
+No events
+
+Dll operation events (1 events):
+Event: 0.011 Loaded shared library C:\Users\OUMAIMA\.jdks\openjdk-23.0.1\bin\java.dll
+
+Deoptimization events (0 events):
+No events
+
+Classes loaded (0 events):
+No events
+
+Classes unloaded (0 events):
+No events
+
+Classes redefined (0 events):
+No events
+
+Internal exceptions (0 events):
+No events
+
+VM Operations (0 events):
+No events
+
+Memory protections (0 events):
+No events
+
+Nmethod flushes (0 events):
+No events
+
+Events (0 events):
+No events
+
+
+Dynamic libraries:
+0x00007ff7ec7f0000 - 0x00007ff7ec7fe000 	C:\Users\OUMAIMA\.jdks\openjdk-23.0.1\bin\java.exe
+0x00007ff87fcf0000 - 0x00007ff87ff07000 	C:\WINDOWS\SYSTEM32\ntdll.dll
+0x00007ff87eb00000 - 0x00007ff87ebc4000 	C:\WINDOWS\System32\KERNEL32.DLL
+0x00007ff87d5a0000 - 0x00007ff87d972000 	C:\WINDOWS\System32\KERNELBASE.dll
+0x00007ff87cde0000 - 0x00007ff87cef1000 	C:\WINDOWS\System32\ucrtbase.dll
+0x00007ff867450000 - 0x00007ff86746b000 	C:\Users\OUMAIMA\.jdks\openjdk-23.0.1\bin\VCRUNTIME140.dll
+0x00007ff867860000 - 0x00007ff867877000 	C:\Users\OUMAIMA\.jdks\openjdk-23.0.1\bin\jli.dll
+0x00007ff87e940000 - 0x00007ff87eaf1000 	C:\WINDOWS\System32\USER32.dll
+0x00007ff85a090000 - 0x00007ff85a32b000 	C:\WINDOWS\WinSxS\amd64_microsoft.windows.common-controls_6595b64144ccf1df_6.0.22621.5697_none_27154c497380d676\COMCTL32.dll
+0x00007ff87d4d0000 - 0x00007ff87d4f6000 	C:\WINDOWS\System32\win32u.dll
+0x00007ff87ec00000 - 0x00007ff87eca7000 	C:\WINDOWS\System32\msvcrt.dll
+0x00007ff87ebd0000 - 0x00007ff87ebf9000 	C:\WINDOWS\System32\GDI32.dll
+0x00007ff87cf80000 - 0x00007ff87d0a3000 	C:\WINDOWS\System32\gdi32full.dll
+0x00007ff87d500000 - 0x00007ff87d59a000 	C:\WINDOWS\System32\msvcp_win.dll
+0x00007ff87ecb0000 - 0x00007ff87ece1000 	C:\WINDOWS\System32\IMM32.DLL
+0x00007ff8683b0000 - 0x00007ff8683bc000 	C:\Users\OUMAIMA\.jdks\openjdk-23.0.1\bin\vcruntime140_1.dll
+0x00007ff854af0000 - 0x00007ff854b7e000 	C:\Users\OUMAIMA\.jdks\openjdk-23.0.1\bin\msvcp140.dll
+0x00007fffb8ec0000 - 0x00007fffb9c0f000 	C:\Users\OUMAIMA\.jdks\openjdk-23.0.1\bin\server\jvm.dll
+0x00007ff87f150000 - 0x00007ff87f201000 	C:\WINDOWS\System32\ADVAPI32.dll
+0x00007ff87e610000 - 0x00007ff87e6b8000 	C:\WINDOWS\System32\sechost.dll
+0x00007ff87d3e0000 - 0x00007ff87d408000 	C:\WINDOWS\System32\bcrypt.dll
+0x00007ff87f030000 - 0x00007ff87f147000 	C:\WINDOWS\System32\RPCRT4.dll
+0x00007ff87db90000 - 0x00007ff87dc01000 	C:\WINDOWS\System32\WS2_32.dll
+0x00007ff87bc10000 - 0x00007ff87bc5d000 	C:\WINDOWS\SYSTEM32\POWRPROF.dll
+0x00007ff871970000 - 0x00007ff8719a4000 	C:\WINDOWS\SYSTEM32\WINMM.dll
+0x00007ff870d60000 - 0x00007ff870d6a000 	C:\WINDOWS\SYSTEM32\VERSION.dll
+0x00007ff87bbf0000 - 0x00007ff87bc03000 	C:\WINDOWS\SYSTEM32\UMPDC.dll
+0x00007ff87beb0000 - 0x00007ff87bec8000 	C:\WINDOWS\SYSTEM32\kernel.appcore.dll
+0x00007ff867240000 - 0x00007ff86724a000 	C:\Users\OUMAIMA\.jdks\openjdk-23.0.1\bin\jimage.dll
+0x00007ff87a7b0000 - 0x00007ff87a9e3000 	C:\WINDOWS\SYSTEM32\DBGHELP.DLL
+0x00007ff87e1f0000 - 0x00007ff87e582000 	C:\WINDOWS\System32\combase.dll
+0x00007ff87eec0000 - 0x00007ff87ef98000 	C:\WINDOWS\System32\OLEAUT32.dll
+0x00007ff86c660000 - 0x00007ff86c692000 	C:\WINDOWS\SYSTEM32\dbgcore.DLL
+0x00007ff87cf00000 - 0x00007ff87cf7b000 	C:\WINDOWS\System32\bcryptPrimitives.dll
+0x00007ff867230000 - 0x00007ff86723f000 	C:\Users\OUMAIMA\.jdks\openjdk-23.0.1\bin\instrument.dll
+0x00007ff866fb0000 - 0x00007ff866fce000 	C:\Users\OUMAIMA\.jdks\openjdk-23.0.1\bin\java.dll
+0x00007ff87d980000 - 0x00007ff87db20000 	C:\WINDOWS\System32\ole32.dll
+0x00007ff87f260000 - 0x00007ff87fb01000 	C:\WINDOWS\System32\SHELL32.dll
+0x00007ff87d130000 - 0x00007ff87d26f000 	C:\WINDOWS\System32\wintypes.dll
+
+dbghelp: loaded successfully - version: 4.0.5 - missing functions: none
+symbol engine: initialized successfully - sym options: 0x614 - pdb path: .;C:\Users\OUMAIMA\.jdks\openjdk-23.0.1\bin;C:\WINDOWS\SYSTEM32;C:\WINDOWS\WinSxS\amd64_microsoft.windows.common-controls_6595b64144ccf1df_6.0.22621.5697_none_27154c497380d676;C:\Users\OUMAIMA\.jdks\openjdk-23.0.1\bin\server
+
+VM Arguments:
+jvm_args: -Dmaven.multiModuleProjectDirectory=F:\app\Downloads\miniprojet\backend\E-commerce -Djansi.passthrough=true -Dmaven.home=C:\Users\OUMAIMA\.m2\wrapper\dists\apache-maven-3.9.11-bin\6mqf5t809d9geo83kj4ttckcbc\apache-maven-3.9.11 -Dclassworlds.conf=C:\Users\OUMAIMA\.m2\wrapper\dists\apache-maven-3.9.11-bin\6mqf5t809d9geo83kj4ttckcbc\apache-maven-3.9.11\bin\m2.conf -Dmaven.ext.class.path=F:\OUMAIMA\IntelliJ IDEA 2024.2.2\plugins\maven\lib\maven-event-listener.jar -javaagent:F:\OUMAIMA\IntelliJ IDEA 2024.2.2\lib\idea_rt.jar=61576:F:\OUMAIMA\IntelliJ IDEA 2024.2.2\bin -Dfile.encoding=UTF-8 -Dsun.stdout.encoding=UTF-8 -Dsun.stderr.encoding=UTF-8 
+java_command: org.codehaus.classworlds.Launcher -Didea.version=2024.2.2 --offline install
+java_class_path (initial): C:\Users\OUMAIMA\.m2\wrapper\dists\apache-maven-3.9.11-bin\6mqf5t809d9geo83kj4ttckcbc\apache-maven-3.9.11\boot\plexus-classworlds-2.9.0.jar;C:\Users\OUMAIMA\.m2\wrapper\dists\apache-maven-3.9.11-bin\6mqf5t809d9geo83kj4ttckcbc\apache-maven-3.9.11\boot\plexus-classworlds.license
+Launcher Type: SUN_STANDARD
+
+[Global flags]
+     intx CICompilerCount                          = 4                                         {product} {ergonomic}
+     uint ConcGCThreads                            = 3                                         {product} {ergonomic}
+     uint G1ConcRefinementThreads                  = 10                                        {product} {ergonomic}
+   size_t G1HeapRegionSize                         = 2097152                                   {product} {ergonomic}
+   size_t InitialHeapSize                          = 266338304                                 {product} {ergonomic}
+   size_t MarkStackSize                            = 4194304                                   {product} {ergonomic}
+   size_t MarkStackSizeMax                         = 536870912                                 {product} {ergonomic}
+   size_t MaxHeapSize                              = 4236247040                                {product} {ergonomic}
+   size_t MinHeapDeltaBytes                        = 2097152                                   {product} {ergonomic}
+   size_t MinHeapSize                              = 8388608                                   {product} {ergonomic}
+    uintx NonNMethodCodeHeapSize                   = 5832704                                {pd product} {ergonomic}
+    uintx NonProfiledCodeHeapSize                  = 122945536                              {pd product} {ergonomic}
+    uintx ProfiledCodeHeapSize                     = 122880000                              {pd product} {ergonomic}
+    uintx ReservedCodeCacheSize                    = 251658240                              {pd product} {ergonomic}
+     bool SegmentedCodeCache                       = true                                      {product} {ergonomic}
+   size_t SoftMaxHeapSize                          = 4236247040                             {manageable} {ergonomic}
+     bool UseCompressedOops                        = true                           {product lp64_product} {ergonomic}
+     bool UseG1GC                                  = true                                      {product} {ergonomic}
+     bool UseLargePagesIndividualAllocation        = false                                  {pd product} {ergonomic}
+
+Logging:
+Log output configuration:
+ #0: stdout all=warning uptime,level,tags foldmultilines=false
+ #1: stderr all=off uptime,level,tags foldmultilines=false
+
+Environment Variables:
+PATH=C:\Program Files\ImageMagick-7.1.1-Q16;C:\Python313\Scripts\;C:\Python313\;C:\oraclexe\app\oracle\product\11.2.0\server\bin;C:\Program Files\Common Files\Oracle\Java\javapath;C:\Program Files (x86)\Common Files\Oracle\Java\javapath;C:\app\OUMAIMA\product\21c\dbhomeXE\bin;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;C:\WINDOWS\System32\OpenSSH\;C:\TDM-GCC-64\bin;C:\MATLAB701\bin\win32;C:\Program Files\Git\cmd;C:\Program Files\dotnet\;C:\ProgramData\chocolatey\bin;C:\Program Files\gs\gs10.04.0\bin;%NVM_HOME%;%NVM_SYMLINK%;C:\Users\OUMAIMA\AppData\Local\Programs\Python\Python311\Scripts\;C:\Users\OUMAIMA\AppData\Local\Programs\Python\Python311\;C:\Users\OUMAIMA\AppData\Local\Microsoft\WindowsApps;C:\Users\OUMAIMA\AppData\Local\atom\bin;C:\Users\OUMAIMA\AppData\Local\Microsoft\WindowsApps;C:\Users\OUMAIMA\AppData\Local\GitHubDesktop\bin;C:\Users\OUMAIMA\AppData\Local\Programs\Microsoft VS Code\bin;C:\Users\OUMAIMA\.dotnet\tools;F:\OUMAIMA\IntelliJ IDEA 2024.2.2\bin;;C:\Users\OUMAIMA\AppData\Roaming\npm;C:\Users\OUMAIMA\AppData\Local\Programs\Ollama;C:\Program Files\Tesseract-OCR\;H:\ImageMagick-7.1.1-Q16\magick.exe;C:\Users\OUMAIMA\AppData\Local\nvm;C:\nvm4w\nodejs
+USERNAME=OUMAIMA
+OS=Windows_NT
+PROCESSOR_IDENTIFIER=Intel64 Family 6 Model 165 Stepping 2, GenuineIntel
+TMP=C:\Users\OUMAIMA\AppData\Local\Temp
+TEMP=C:\Users\OUMAIMA\AppData\Local\Temp
+
+
+
+
+Periodic native trim disabled
+
+---------------  S Y S T E M  ---------------
+
+OS:
+ Windows 11 , 64 bit Build 22621 (10.0.22621.5415)
+OS uptime: 6 days 12:49 hours
+
+CPU: total 12 (initial active 12) (6 cores per cpu, 2 threads per core) family 6 model 165 stepping 2 microcode 0x100, cx8, cmov, fxsr, ht, mmx, 3dnowpref, sse, sse2, sse3, ssse3, sse4.1, sse4.2, popcnt, lzcnt, tsc, tscinvbit, avx, avx2, aes, erms, clmul, bmi1, bmi2, adx, fma, vzeroupper, clflush, clflushopt, rdtscp, f16c, pku
+Processor Information for the first 12 processors :
+  Max Mhz: 2496, Current Mhz: 2496, Mhz Limit: 2496
+
+Memory: 4k page, system-wide physical 16159M (2325M free)
+TotalPageFile size 30356M (AvailPageFile size 14M)
+current process WorkingSet (physical memory assigned to process): 12M, peak: 12M
+current process commit charge ("private bytes"): 65M, peak: 318M
+
+vm_info: OpenJDK 64-Bit Server VM (23.0.1+11-39) for windows-amd64 JRE (23.0.1+11-39), built on 2024-09-30T07:20:43Z with MS VC++ 17.6 (VS2022)
+
+END.

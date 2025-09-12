@@ -92,6 +92,9 @@ public class AuthenticationController {
             userRepository.save(user);
 
             // Send new verification email
+            // Resend email
+            String verificationLink = verificationUrl + "?token=" + newToken;
+
             emailVerificationService.sendVerificationEmail(user);
 
             return ResponseEntity.ok().body("Verification email sent successfully");

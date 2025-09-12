@@ -35,7 +35,7 @@ public class AuthenticationServicelmpl implements AuthenticationService {
 
     @Override
     public JwtAuthenticationResponse SignUp(SignUpRequest request) {
-        if (userRepository.findByEmail(request.getEmail()) .isPresent()) {
+        if (userRepository.findByEmail(request.getEmail()).isPresent()) {
             throw  new RuntimeException("Email in use ");
         }
 
@@ -48,6 +48,8 @@ public class AuthenticationServicelmpl implements AuthenticationService {
                 .role(role)
                 .build();
         userRepository.save(user);
+        //
+        emailVerificationService.sendVerificationEmail(user);
         var jwtToken = jwtService.generateToken(user);
 
         var refreshToken = refreshTokenService.createRefreshToken(user.getId());
@@ -58,7 +60,7 @@ public class AuthenticationServicelmpl implements AuthenticationService {
                 .userId(user.getId())
                 .role(user.getRole().name())
                 .tokenType("Bearer")
-
+                .isVerified(false) // Indicate user is not verified yet
                 .build();
     }
 
@@ -86,6 +88,7 @@ public class AuthenticationServicelmpl implements AuthenticationService {
                 .userId(user.getId())
                 .role(user.getRole().name())
                 .tokenType("Bearer")
+                .isVerified(user.isVerified())
                 .build();
     }
 
